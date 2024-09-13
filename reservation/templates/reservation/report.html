@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Booked Rooms Report</title>
+    <style>
+        .status-confirmed { color: green; }
+        .status-pending { color: orange; }
+        .status-cancelled { color: red; }
+    </style>
+</head>
+<body>
+    <h1>Booked Rooms Report</h1>
+    <table border="2">
+        <thead>
+            <tr>
+                <th>Room Number</th>
+                <th>Room Type</th>
+                <th>Guest Name</th>
+                <th>View</th>
+                <th>Amenities</th>
+                <th>Check-In Date</th>
+                <th>Check-Out Date</th>
+                <th>Nights</th>
+                <th>Refund Policy</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for reservation in reservations %}
+            <tr>
+                <td>{{ reservation.room.number }}</td>
+                <td>{{ reservation.room.room_type }}</td>
+                <td>{{ reservation.name }}</td>
+                <td>{{ reservation.room.view }}</td>
+                <td>
+                    <ul>
+                        {% for amenity in reservation.room.listing.amenities.all %}
+                            <li>{{ amenity.name }}</li>
+                        {% endfor %}
+                    </ul>
+                </td>
+                <td>{{ reservation.start_time|date:"F j, Y" }}</td>
+                <td>{{ reservation.end_time|date:"F j, Y" }}</td>
+                <td>{{ reservation.nights }}</td>
+                <td>
+                    {% if reservation.room.refundable %}
+                        Refundable until {{ reservation.room.refund_deadline|date:"F j, Y" }}
+                    {% else %}
+                        Non-refundable
+                    {% endif %}
+                </td>
+                <td class="{% if reservation.status == 'Confirmed' %}status-confirmed
+                    {% elif reservation.status == 'Pending' %}status-pending
+                    {% else %}status-cancelled
+                    {% endif %}">
+                    {{ reservation.status }}
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+        <tfoot>
+            <tr>
+                <td colspan="10">Total Reservations: {{ reservations|length }}</td>
+            </tr>
+        </tfoot>
+    </table>
+</body>
+</html>

@@ -1,0 +1,47 @@
+# Python
+*.pyc
+*.pyo
+*.pyd
+__pycache__/
+*.db
+*.sqlite3
+
+# Django
+local_settings.py
+staticfiles/
+media/
+
+# Virtual Environment
+venv/
+ENV/
+env/
+.venv/
+
+# PyCharm
+.idea/
+
+# Build and packaging
+build/
+dist/
+*.egg-info/
+*.egg
+MANIFEST
+
+# IDE-specific
+.spyderproject
+.spyproject
+.ropeproject
+
+# Environment
+.python-version
+.env
+env.bak
+.venv
+venv.bak
+
+# Miscellaneous
+*.log
+*.tmp
+*.swp
+*.swo
+
